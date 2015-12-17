@@ -1,5 +1,3 @@
-<div>
-	<input type="text" [(ngModel)]="title">
-
-	<pre>this.title = {{ title | json }}</pre>
+<div *ngFor="#board of boards; #id = index">
+	{{board.title}}
 </div>
