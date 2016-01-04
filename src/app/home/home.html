@@ -1,3 +1,3 @@
 <div *ngFor="#board of boards; #id = index">
-	{{board.title}}
+	<a [routerLink]="['/Board', {boardId: board.id}]">{{board.title}}</a>
 </div>

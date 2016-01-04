@@ -1,27 +1,30 @@
 import {Component} from 'angular2/core';
-import {FORM_DIRECTIVES, CORE_DIRECTIVES} from 'angular2/common';
-import {Http} from 'angular2/http';
+import {CORE_DIRECTIVES} from 'angular2/common';
+import {RouterOutlet, RouterLink} from 'angular2/router';
+
+import {Observable} from 'rxjs/Observable';
 
 import {BoardStorageService} from '../providers/board-storage-service';
+import {BoardInterface} from '../interfaces/board';
 
 
 @Component({
 	selector: 'home',
 	styles: [ require('./home.css') ],
 	template: require('./home.html'),
-	directives: [CORE_DIRECTIVES]
+	directives: [CORE_DIRECTIVES, RouterOutlet, RouterLink],
+	providers: [BoardStorageService]
 })
 export class Home {
 
-	boards: any[] = [];
+	public boards: BoardInterface[];
 
-	constructor() {
+	constructor(service: BoardStorageService) {
 
-		var service = new BoardStorageService();
 		var that = this;
 
-		service.getList().then(function(value:any) {
-			that.boards = Object.keys(value).map((k) => value[k]);
+		service.getList().subscribe(function(value: any) {
+			that.boards = value;
 		});
 
 	}
